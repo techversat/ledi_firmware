@@ -1,0 +1,28 @@
+Reference Material
+==================
+
+Contains datasheets and instruction manuals.
+
+
+
+Bluetooth Module
+================
+HC-06 - slave only
+  * TX (1)
+  * RX (2)
+  * 3.3V (12)
+  * GND (13)
+  * KEY (26)  unused in HC-05
+  * LED (24)  unused in HC-05
+  * defaults in AT mode when not paired
+  * KEY high erases memory
+
+HC-05 - master + slave
+  * TX (1)
+  * RX (2)
+  * 3.3V (12)
+  * GND (13)
+  * KEY (34)  unused in HC-06
+  * LED1 (31) unused in HC-06
+  * LED2 (32) unused in HC-06
+  * KEY high puts in AT mode
