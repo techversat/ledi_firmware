@@ -49,6 +49,8 @@ TWI_FREQ = 400000
 UPLOAD_RATE = 115200  # 57600
 AVRDUDE_PROGRAMMER = stk500
 
+DT = `date '+%Y%m'`
+
 # GCCFLAGS=-g -Os -Wall -mmcu=$(MCU) -DCPU_FREQ=$(CPU_FREQ) -DF_CPU=$(CPU_FREQ) -DTWI_FREQ=$(TWI_FREQ)
 GCCFLAGS=-Os -Wall -mmcu=$(MCU) -DCPU_FREQ=$(CPU_FREQ) -DF_CPU=$(CPU_FREQ) -DTWI_FREQ=$(TWI_FREQ)
 LINKFLAGS=-Wl,-u,vfprintf -lprintf_flt -Wl,-u,vfscanf -lscanf_flt -lm
@@ -91,6 +93,7 @@ termsync.o: term.c
 $(TARGET).hex: $(TARGET).c utils.o ht1632.o uart.o term.o calibration.o
 	avr-gcc ${GCCFLAGS} ${LINKFLAGS} -o $(TARGET).o calibration.o utils.o ht1632.o uart.o term.o $(TARGET).c
 	avr-objcopy -j .text -j .data -O ihex $(TARGET).o $(TARGET).hex
+	cp $(TARGET).hex ../bin/$(TARGET)_$(DT).hex
 	avr-size $(TARGET).o
 
 $(TARGET)_sync.hex: $(TARGET).c utils.o ht1632.o uartsync.o termsync.o calibration.o
