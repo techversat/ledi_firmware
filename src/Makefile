@@ -118,5 +118,10 @@ tinyisp:	$(TARGET).hex
 $(TARGET)-uploadisp2:	$(TARGET)_sync.hex
 	$(AVRDUDE) -V -F -P usb -c avrispmkII -p $(MCUID) -U flash:w:$(TARGET)_sync.hex
 
+fuse:
+	$(AVRDUDE) -F -p $(MCUID) -P usb -c avrispmkII -U lfuse:w:0xE2:m
+	$(AVRDUDE) -F -p $(MCUID) -P usb -c avrispmkII -U lfuse:r:-:h -U hfuse:r:-:h
 
+fuse2:
+	$(AVRDUDE) -F -p $(MCUID) -P usb -c usbtiny -U lfuse:w:0xE2:m
 
