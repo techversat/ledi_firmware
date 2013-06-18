@@ -109,15 +109,21 @@ $(TARGET)-uploadbl:	$(TARGET).hex
 	./pulsedtr.py $(PORT)
 	$(AVRDUDE) $(AVRDUDE_FLAGS)
 
-$(TARGET)-uploadisp:	$(TARGET).hex
-	$(AVRDUDE) -F -p m328p -P usb -c avrispmkII -U lfuse:w:0xE2:m
+$(TARGET)-uploadisp: fuse	$(TARGET).hex
+	# $(AVRDUDE) -F -p m328p -P usb -c avrispmkII -U lfuse:w:0xE2:m
 	$(AVRDUDE) $(AVRDUDE_FLAGS_ISP)
 
-tinyisp:	$(TARGET).hex
-	$(AVRDUDE) -F -p m328p -P usb -c avrispmkII -U lfuse:w:0xE2:m
+tinyisp: fuse2	$(TARGET).hex
+	# $(AVRDUDE) -F -p m328p -P usb -c avrispmkII -U lfuse:w:0xE2:m
 	$(AVRDUDE) -V -F -c usbtiny -p $(MCUID) -U flash:w:$(TARGET).hex
 
 $(TARGET)-uploadisp2:	$(TARGET)_sync.hex
 	$(AVRDUDE) -V -F -P usb -c avrispmkII -p $(MCUID) -U flash:w:$(TARGET)_sync.hex
 
+fuse:
+	$(AVRDUDE) -F -p $(MCUID) -P usb -c avrispmkII -U lfuse:w:0xE2:m
+	$(AVRDUDE) -F -p $(MCUID) -P usb -c avrispmkII -U lfuse:r:-:h -U hfuse:r:-:h
 
+fuse2:
+	$(AVRDUDE) -F -p $(MCUID) -P usb -c usbtiny -U lfuse:w:0xE2:m
+	$(AVRDUDE) -F -p $(MCUID) -P usb -c usbtiny -U lfuse:r:-:h -U hfuse:r:-:h
