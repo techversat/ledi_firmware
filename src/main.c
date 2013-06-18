@@ -579,12 +579,13 @@ int main()
   // strncpy(strbuf, "ready: ", 7);
   // sprintf(&strbuf[7], "%d", OSCCAL);
   // ht1632_scrollstr(strbuf, 10, 10);
+
   int start = 5;
   ht1632_putchar(start,1,'L'); 
   ht1632_putchar(start+6,1,'E'); 
   ht1632_putchar(start+12,1,'D'); 
   ht1632_putchar(start+18,1,'I'); 
-  delay_ms(5000); 
+  delay_ms(3000); 
 
   set_time(timebuf);
   disp_time(timebuf);

@@ -110,13 +110,14 @@ $(TARGET)-uploadbl:	$(TARGET).hex
 	$(AVRDUDE) $(AVRDUDE_FLAGS)
 
 $(TARGET)-uploadisp:	$(TARGET).hex
+	$(AVRDUDE) -F -p m328p -P usb -c avrispmkII -U lfuse:w:0xE2:m
 	$(AVRDUDE) $(AVRDUDE_FLAGS_ISP)
 
 tinyisp:	$(TARGET).hex
+	$(AVRDUDE) -F -p m328p -P usb -c avrispmkII -U lfuse:w:0xE2:m
 	$(AVRDUDE) -V -F -c usbtiny -p $(MCUID) -U flash:w:$(TARGET).hex
 
 $(TARGET)-uploadisp2:	$(TARGET)_sync.hex
 	$(AVRDUDE) -V -F -P usb -c avrispmkII -p $(MCUID) -U flash:w:$(TARGET)_sync.hex
-
 
 
